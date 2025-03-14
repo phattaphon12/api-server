@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-function tempLogForm() {
+const TempLogForm = () => {
   return (
-    <div>tempLogForm</div>
-  )
+    <div>TempLogForm</div>
+  );
 }
 
-export default tempLogForm
+export default TempLogForm;
