@@ -7,7 +7,6 @@ import App from './App.jsx';
 import ViewConfig from './pages/viewConfig/ViewConfig.jsx';
 import TempLogForm from './pages/tempLogForm/TempLogForm.jsx';
 import ViewLogs from './pages/viewLogs/ViewLogs.jsx';
-// import ErrorPage from './pages/ErrorPage/ErrorPage.jsx';
 
 const router = createBrowserRouter([
   {
