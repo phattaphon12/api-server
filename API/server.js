@@ -1,10 +1,12 @@
 const axios = require("axios");
 const express = require("express");
+const cors = require('cors');
 const app = express();
 
-const port = 3000;
+const port = 5000;
 
 app.use(express.json());
+app.use(cors());
 
 const url = [
   "https://script.google.com/macros/s/AKfycbzwclqJRodyVjzYyY-NTQDb9cWG6Hoc5vGAABVtr5-jPA_ET_2IasrAJK4aeo5XoONiaA/exec",
