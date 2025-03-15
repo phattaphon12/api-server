@@ -113,7 +113,7 @@ const Navbar = () => {
       >
         <div className="px-2 pt-2 pb-3 space-y-1 bg-gray-800">
           <NavLink
-            to="/config"
+            to="/"
             className={({ isActive }) =>
               `block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
                 isActive
