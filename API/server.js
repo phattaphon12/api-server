@@ -96,14 +96,12 @@ app.get("/logs/:yourDroneId", async (req, res) => {
 
 app.post("/logs", async (req, res) => {
   try {
-    // ✅ req.body ตอนนี้อ่านค่า JSON ได้แล้ว
     const { drone_id, drone_name, country, celsius } = req.body;
 
     if (!drone_id || !drone_name || !country || celsius === undefined) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    // ✅ ส่งข้อมูลไปยัง Drone Log Server
     const response = await axios.post(url[1], {
       drone_id,
       drone_name,

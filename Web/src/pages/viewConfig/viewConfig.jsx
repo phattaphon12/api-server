@@ -66,10 +66,6 @@ const ViewConfig = () => {
               <strong className="font-semibold text-gray-900">Country:</strong>{" "}
               {drone.country}
             </p>
-            <p className="text-gray-700">
-              <strong className="font-semibold text-gray-900">Weight:</strong>{" "}
-              {drone.weight} kg
-            </p>
           </div>
         </div>
       )}
