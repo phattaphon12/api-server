@@ -66,13 +66,28 @@ app.get("/status/:yourDroneId", async (req, res) => {
 app.get("/logs/:yourDroneId", async (req, res) => {
   const droneId = Number(req.params.yourDroneId);
   try {
-    const response = await axios.get(url[1]);
-    const data = response.data.items;
-    // res.json(response.data.items);
-    const logs = data.find((d) => d.drone_id === droneId);
+    const response = await axios.get(url[1]); // url[1] = "https://app-tracking.pockethost.io/api/collections/drone_logs/records"
+    const data = response.data.items; // Assuming items is an array of log entries
 
-    res.json(logs); // ส่ง JSON array ของ logs กลับไป
+    // Filter logs by droneId
+    const logs = data.filter((d) => d.drone_id === droneId);
 
+    // Sort logs by 'created' field (descending: newest to oldest)
+    const sortedLogs = logs.sort((a, b) => new Date(b.created) - new Date(a.created));
+
+    // Limit to 25 entries
+    const limitedLogs = sortedLogs.slice(0, 25);
+
+    // Map to include only specified fields
+    const filteredLogs = limitedLogs.map(log => ({
+      drone_id: log.drone_id,
+      drone_name: log.drone_name,
+      created: log.created,
+      country: log.country,
+      celsius: log.celsius
+    }));
+
+    res.json(filteredLogs); // Send the filtered and sorted JSON array
   } catch (err) {
     console.error("Error fetching data:", err.message);
     res.status(500).json({ error: "Failed to fetch data" });
