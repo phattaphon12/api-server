@@ -97,18 +97,10 @@ app.get("/logs/:yourDroneId", async (req, res) => {
 app.post("/logs", async (req, res) => {
   try {
     const { drone_id, drone_name, country, celsius } = req.body;
-
     if (!drone_id || !drone_name || !country || celsius === undefined) {
       return res.status(400).json({ error: "Missing required fields" });
     }
-
-    const response = await axios.post(url[1], {
-      drone_id,
-      drone_name,
-      country,
-      celsius,
-    });
-
+    const response = await axios.post(url[1], { drone_id, drone_name, country, celsius });
     res.status(201).json(response.data);
   } catch (err) {
     console.error("Error creating log:", err.message);
