@@ -2,15 +2,17 @@ const axios = require("axios");
 const express = require("express");
 const cors = require('cors');
 const app = express();
+const dotenv = require('dotenv');
+dotenv.config();
 
-const port = 5000;
+const port = process.env.PORT;
 
 app.use(express.json());
 app.use(cors());
 
 const url = [
-  "https://script.google.com/macros/s/AKfycbzwclqJRodyVjzYyY-NTQDb9cWG6Hoc5vGAABVtr5-jPA_ET_2IasrAJK4aeo5XoONiaA/exec",
-  "https://app-tracking.pockethost.io/api/collections/drone_logs/records",
+  process.env.API_URL_1,
+  process.env.API_URL_2,
 ];
 
 const authMiddleware = (req, res, next) => {
@@ -20,14 +22,13 @@ const authMiddleware = (req, res, next) => {
     return res.status(401).json({ error: "Unauthorized: No Bearer token provided" });
   }
 
-  const token = authHeader.split(" ")[1]; // ดึง Token ออกมา
+  const token = authHeader.split(" ")[1];
 
-  // ตรวจสอบว่า Token ถูกต้องหรือไม่
-  if (token !== "20250301efx") {
+  if (token !== process.env.API_TOKEN) { // ✅ เปลี่ยนไปใช้ API_TOKEN จาก .env
     return res.status(403).json({ error: "Forbidden: Invalid token" });
   }
 
-  next(); // ถ้า Token ถูกต้อง ให้ไปทำงานต่อ
+  next();
 };
 
 app.get("/configs/:yourDroneId", async (req, res) => {
@@ -123,7 +124,7 @@ app.post("/logs", authMiddleware, async (req, res) => {
     const response = await axios.post(url[1], {
       drone_id, drone_name, country, celsius
     }, {
-      headers: { Authorization: `Bearer 20250301efx` } // ส่ง Token ไป API ปลายทางด้วย
+      headers: { Authorization: `Bearer ${process.env.API_TOKEN}` } // ✅ ใช้ Token จาก .env
     });
 
     res.status(201).json(response.data);
