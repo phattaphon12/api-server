@@ -9,7 +9,7 @@ const TempLogForm = () => {
   const { yourDroneId } = useParams();
   const droneId = yourDroneId || import.meta.env.VITE_DRONE_ID || ""; // Fallback to empty string if undefined
   const [formData, setFormData] = useState({
-    drone_id: droneId,
+    drone_id: "",
     drone_name: "",
     country: "",
     celsius: "",
@@ -52,29 +52,39 @@ const TempLogForm = () => {
     setLoading(true);
     setError(null);
     setSuccess(null);
-
+  
     const submitData = {
       drone_id: Number(formData.drone_id),
       drone_name: formData.drone_name,
       country: formData.country,
       celsius: Number(formData.celsius),
     };
-
-    // Validate required fields client-side (mirrors backend check)
+  
+    // Validate required fields
     if (!submitData.drone_id || !submitData.drone_name || !submitData.country || submitData.celsius === undefined) {
       setError("Missing required fields");
       setLoading(false);
       return;
     }
-
+  
     console.log("Submitting log data:", submitData);
-
+  
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/logs`, submitData);
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/logs`,
+        submitData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`, // เพิ่ม Token
+          },
+        }
+      );
+  
       console.log("Server response:", response.data);
       setSuccess("Log created successfully!");
       setFormData((prev) => ({ ...prev, celsius: "" }));
-      setCountrySearch(""); // Reset country search after submit
+      setCountrySearch("");
     } catch (err) {
       setError(err.response?.data?.error || "Failed to create log");
       console.error("Submission error:", {
@@ -84,7 +94,7 @@ const TempLogForm = () => {
     } finally {
       setLoading(false);
     }
-  };
+  };  
 
   const filteredCountries = countryNames.filter((country) =>
     country.toLowerCase().includes(countrySearch.toLowerCase())
