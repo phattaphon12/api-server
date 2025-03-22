@@ -13,6 +13,23 @@ const url = [
   "https://app-tracking.pockethost.io/api/collections/drone_logs/records",
 ];
 
+const authMiddleware = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ error: "Unauthorized: No Bearer token provided" });
+  }
+
+  const token = authHeader.split(" ")[1]; // ดึง Token ออกมา
+
+  // ตรวจสอบว่า Token ถูกต้องหรือไม่
+  if (token !== "20250301efx") {
+    return res.status(403).json({ error: "Forbidden: Invalid token" });
+  }
+
+  next(); // ถ้า Token ถูกต้อง ให้ไปทำงานต่อ
+};
+
 app.get("/configs/:yourDroneId", async (req, res) => {
   const droneId = Number(req.params.yourDroneId);
   try {
@@ -94,27 +111,25 @@ app.get("/logs/:yourDroneId", async (req, res) => {
   }
 });
 
-app.post("/logs", async (req, res) => {
+// ใช้ Middleware นี้ในทุก API ที่ต้องใช้ Authorization
+app.post("/logs", authMiddleware, async (req, res) => {
   try {
-    // ✅ req.body ตอนนี้อ่านค่า JSON ได้แล้ว
     const { drone_id, drone_name, country, celsius } = req.body;
 
     if (!drone_id || !drone_name || !country || celsius === undefined) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    // ✅ ส่งข้อมูลไปยัง Drone Log Server
     const response = await axios.post(url[1], {
-      drone_id,
-      drone_name,
-      country,
-      celsius,
+      drone_id, drone_name, country, celsius
+    }, {
+      headers: { Authorization: `Bearer 20250301efx` } // ส่ง Token ไป API ปลายทางด้วย
     });
 
     res.status(201).json(response.data);
   } catch (err) {
-    console.error("Error creating log:", err.message);
-    res.status(500).json({ error: "Failed to create log" });
+    console.error("Error creating log:", err.response?.data || err.message);
+    res.status(500).json({ error: "Failed to create log", details: err.response?.data || err.message });
   }
 });
 
