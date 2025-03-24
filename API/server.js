@@ -31,6 +31,11 @@ const authMiddleware = (req, res, next) => {
   next();
 };
 
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
+
+
 app.get("/configs/:yourDroneId", async (req, res) => {
   const droneId = Number(req.params.yourDroneId);
   try {
