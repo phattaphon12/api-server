@@ -24,7 +24,7 @@ const authMiddleware = (req, res, next) => {
 
   const token = authHeader.split(" ")[1];
 
-  if (token !== process.env.API_TOKEN) { // ✅ เปลี่ยนไปใช้ API_TOKEN จาก .env
+  if (token !== process.env.API_TOKEN) {
     return res.status(403).json({ error: "Forbidden: Invalid token" });
   }
 
@@ -41,10 +41,8 @@ app.get("/configs/:yourDroneId", async (req, res) => {
   try {
     const response = await axios.get(url[0]);
     const data = response.data.data;
-    // res.json(response.data.data);
     const drone = data.find((d) => d.drone_id === droneId);
 
-    // res.json(drone);
     if (drone) {
       const filterDrone = {
         drone_id: drone.drone_id,
@@ -68,10 +66,8 @@ app.get("/status/:yourDroneId", async (req, res) => {
   try {
     const response = await axios.get(url[0]);
     const data = response.data.data;
-    // res.json(response.data.data);
     const status = data.find((d) => d.drone_id === droneId);
 
-    // res.json(drone);
     if (status) {
       const filterDrone = {
         condition: status.condition,
@@ -89,8 +85,8 @@ app.get("/status/:yourDroneId", async (req, res) => {
 app.get("/logs/:yourDroneId", async (req, res) => {
   const droneId = Number(req.params.yourDroneId);
   try {
-    const response = await axios.get(url[1]); // url[1] = "https://app-tracking.pockethost.io/api/collections/drone_logs/records"
-    const data = response.data.items; // Assuming items is an array of log entries
+    const response = await axios.get(url[1]);
+    const data = response.data.items;
 
     // Filter logs by droneId
     const logs = data.filter((d) => d.drone_id === droneId);
@@ -110,14 +106,13 @@ app.get("/logs/:yourDroneId", async (req, res) => {
       celsius: log.celsius
     }));
 
-    res.json(filteredLogs); // Send the filtered and sorted JSON array
+    res.json(filteredLogs);
   } catch (err) {
     console.error("Error fetching data:", err.message);
     res.status(500).json({ error: "Failed to fetch data" });
   }
 });
 
-// ใช้ Middleware นี้ในทุก API ที่ต้องใช้ Authorization
 app.post("/logs", authMiddleware, async (req, res) => {
   try {
     const { drone_id, drone_name, country, celsius } = req.body;
@@ -129,7 +124,7 @@ app.post("/logs", authMiddleware, async (req, res) => {
     const response = await axios.post(url[1], {
       drone_id, drone_name, country, celsius
     }, {
-      headers: { Authorization: `Bearer ${process.env.API_TOKEN}` } // ✅ ใช้ Token จาก .env
+      headers: { Authorization: `Bearer ${process.env.API_TOKEN}` } 
     });
 
     res.status(201).json(response.data);

@@ -1,4 +1,3 @@
-// Web/src/pages/TempLogForm.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import ThreeDots from "../../Components/Spinner/ThreeDots";
@@ -6,8 +5,6 @@ import { useParams } from "react-router-dom";
 import { countries } from "countries-list";
 
 const TempLogForm = () => {
-  const { yourDroneId } = useParams();
-  const droneId = yourDroneId || import.meta.env.VITE_DRONE_ID || ""; // Fallback to empty string if undefined
   const [formData, setFormData] = useState({
     drone_id: "",
     drone_name: "",
@@ -19,13 +16,7 @@ const TempLogForm = () => {
   const [success, setSuccess] = useState(null);
   const [countrySearch, setCountrySearch] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  // Extract and sort country names
   const countryNames = Object.values(countries).map((c) => c.name).sort();
-
-  // Debug initial values
-  // console.log("Initial droneId from params or env:", droneId);
-  // console.log("Initial formData:", formData);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -67,7 +58,7 @@ const TempLogForm = () => {
       return;
     }
   
-    // console.log("Submitting log data:", submitData);
+    console.log("Submitting log data:", submitData);
   
     try {
       const response = await axios.post(

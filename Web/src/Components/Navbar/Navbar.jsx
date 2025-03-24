@@ -1,4 +1,3 @@
-// Navbar.jsx
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../../drone-svgrepo-com.svg";

@@ -7,7 +7,7 @@ import './App.css'
 const App = () => {
   return (
     <Layout>
-      <Outlet /> {/* ต้องมี Outlet เพื่อให้ลูกๆ คอมโพเนนต์แสดงผล */}
+      <Outlet />
     </Layout>
   );
 };
