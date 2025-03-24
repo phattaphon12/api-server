@@ -24,8 +24,8 @@ const TempLogForm = () => {
   const countryNames = Object.values(countries).map((c) => c.name).sort();
 
   // Debug initial values
-  console.log("Initial droneId from params or env:", droneId);
-  console.log("Initial formData:", formData);
+  // console.log("Initial droneId from params or env:", droneId);
+  // console.log("Initial formData:", formData);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -67,7 +67,7 @@ const TempLogForm = () => {
       return;
     }
   
-    console.log("Submitting log data:", submitData);
+    // console.log("Submitting log data:", submitData);
   
     try {
       const response = await axios.post(
@@ -81,9 +81,14 @@ const TempLogForm = () => {
         }
       );
   
-      console.log("Server response:", response.data);
+      // console.log("Server response:", response.data);
       setSuccess("Log created successfully!");
-      setFormData((prev) => ({ ...prev, celsius: "" }));
+      setFormData({
+        drone_id: "",
+        drone_name: "",
+        country: "",
+        celsius: "",
+      });
       setCountrySearch("");
     } catch (err) {
       setError(err.response?.data?.error || "Failed to create log");
