@@ -4,9 +4,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import './index.css';
 import App from './App.jsx';
-import ViewConfig from './pages/viewConfig/ViewConfig.jsx';
-import TempLogForm from './pages/tempLogForm/TempLogForm.jsx';
-import ViewLogs from './pages/viewLogs/ViewLogs.jsx';
+import ViewConfig from './pages/viewConfig/viewConfig';
+import TempLogForm from './pages/tempLogForm/tempLogForm';
+import ViewLogs from './pages/viewLogs/viewLogs';
 
 const router = createBrowserRouter([
   {
