@@ -1,6 +1,7 @@
 // Navbar.jsx
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+import logo from "../../../drone-svgrepo-com.svg";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +16,13 @@ const Navbar = () => {
         <div className="flex justify-between h-16">
           {/* Logo Section */}
           <div className="flex-shrink-0 flex items-center">
-            <NavLink to="/" className="ml-2 text-white text-lg font-semibold">DRONE</NavLink>
+            <NavLink
+              to="/"
+              className="ml-2 text-white text-lg font-semibold flex items-center"
+            >
+              <img src={logo} alt="" className="h-5 mr-2" />
+              DRONE
+            </NavLink>
           </div>
 
           {/* Desktop Navigation */}
@@ -26,8 +33,8 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   `inline-flex items-center px-1 pt-1 text-sm font-medium transition-colors duration-200 ${
                     isActive
-                      ? 'text-white border-b-2 border-indigo-500'
-                      : 'text-gray-300 hover:text-white hover:border-indigo-300'
+                      ? "text-white border-b-2 border-indigo-500"
+                      : "text-gray-300 hover:text-white hover:border-indigo-300"
                   }`
                 }
               >
@@ -39,8 +46,8 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   `inline-flex items-center px-1 pt-1 text-sm font-medium transition-colors duration-200 ${
                     isActive
-                      ? 'text-white border-b-2 border-indigo-500'
-                      : 'text-gray-300 hover:text-white hover:border-indigo-300'
+                      ? "text-white border-b-2 border-indigo-500"
+                      : "text-gray-300 hover:text-white hover:border-indigo-300"
                   }`
                 }
               >
@@ -52,8 +59,8 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   `inline-flex items-center px-1 pt-1 text-sm font-medium transition-colors duration-200 ${
                     isActive
-                      ? 'text-white border-b-2 border-indigo-500'
-                      : 'text-gray-300 hover:text-white hover:border-indigo-300'
+                      ? "text-white border-b-2 border-indigo-500"
+                      : "text-gray-300 hover:text-white hover:border-indigo-300"
                   }`
                 }
               >
@@ -108,7 +115,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
       <div
         className={`sm:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
+          isOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <div className="px-2 pt-2 pb-3 space-y-1 bg-gray-800">
@@ -117,8 +124,8 @@ const Navbar = () => {
             className={({ isActive }) =>
               `block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
                 isActive
-                  ? 'text-white bg-gray-900'
-                  : 'text-gray-300 hover:text-white hover:bg-gray-700'
+                  ? "text-white bg-gray-900"
+                  : "text-gray-300 hover:text-white hover:bg-gray-700"
               }`
             }
             onClick={() => setIsOpen(false)}
@@ -127,12 +134,12 @@ const Navbar = () => {
           </NavLink>
 
           <NavLink
-            to="/temperature"
+            to="/temp"
             className={({ isActive }) =>
               `block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
                 isActive
-                  ? 'text-white bg-gray-900'
-                  : 'text-gray-300 hover:text-white hover:bg-gray-700'
+                  ? "text-white bg-gray-900"
+                  : "text-gray-300 hover:text-white hover:bg-gray-700"
               }`
             }
             onClick={() => setIsOpen(false)}
@@ -145,8 +152,8 @@ const Navbar = () => {
             className={({ isActive }) =>
               `block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
                 isActive
-                  ? 'text-white bg-gray-900'
-                  : 'text-gray-300 hover:text-white hover:bg-gray-700'
+                  ? "text-white bg-gray-900"
+                  : "text-gray-300 hover:text-white hover:bg-gray-700"
               }`
             }
             onClick={() => setIsOpen(false)}

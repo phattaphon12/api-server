@@ -15,7 +15,7 @@ const ViewLogs = () => {
     const fetchLogs = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/logs/${droneId}`);
-        setLogs(response.data); // Expecting an array of logs
+        setLogs(response.data.slice(0, 25)); // Expecting an array of logs
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch drone logs");
