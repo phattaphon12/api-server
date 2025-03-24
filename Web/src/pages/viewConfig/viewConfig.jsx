@@ -1,4 +1,3 @@
-// Web/src/pages/viewConfig/ViewConfig.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ThreeDots from "../../Components/Spinner/ThreeDots";

@@ -1,12 +1,11 @@
-// Web/src/pages/ViewLogs.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ThreeDots from "../../Components/Spinner/ThreeDots";
 import { useParams } from "react-router-dom";
 
 const ViewLogs = () => {
-  const { yourDroneId } = useParams(); // Get droneId from URL params
-  const droneId = yourDroneId || import.meta.env.VITE_DRONE_ID; // Fallback to .env if no param
+  const { yourDroneId } = useParams();
+  const droneId = yourDroneId || import.meta.env.VITE_DRONE_ID;
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,7 +14,7 @@ const ViewLogs = () => {
     const fetchLogs = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/logs/${droneId}`);
-        setLogs(response.data.slice(0, 25)); // Expecting an array of logs
+        setLogs(response.data.slice(0, 25));
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch drone logs");
@@ -24,7 +23,7 @@ const ViewLogs = () => {
     };
 
     fetchLogs();
-  }, [droneId]); // Re-fetch if droneId changes
+  }, [droneId]);
 
   return (
     <div className="container mx-auto mt-[80px] p-6 max-w-4xl">
